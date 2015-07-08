@@ -8,3 +8,5 @@ var thingSchema = mongoose.Schema({
 
 //gives you access to the db
 var Thing = mongoose.model("thing", thingSchema);
+
+module.exports = Thing;
