@@ -10,6 +10,17 @@ describe("Thing", function(){
     beforeEach(function(done){
         db.connect()
         .then(function(){
+            // remove every Thing in the database
+            return Thing.remove({});
+        })
+        .then(function(){
+            // insert a new Thing in the database
+            var rock = new Thing({name: "Rock"});
+            return rock.save();
+        })
+        // if you made it this far you connected to db, and you created a Rock
+        // this is a chained promise
+        .then(function(){
             done();
         });
     });
