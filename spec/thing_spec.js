@@ -21,6 +21,18 @@ describe("Thing", function(){
         // if you made it this far you connected to db, and you created a Rock
         // this is a chained promise
         .then(function(){
+            // you're creating it in memory - it's not saved tho
+            var paper = new Thing({name: "Paper"});
+            // return it to the database
+            return paper.save();
+        })
+        
+        .then(function(){
+            var scissors = new Thing({ name: "Scissors"});
+            scissors.save();
+        })
+        
+        .then(function(){
             done();
         });
     });
