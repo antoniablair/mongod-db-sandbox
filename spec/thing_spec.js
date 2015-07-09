@@ -65,4 +65,45 @@ describe("Thing", function(){
         });
     });
     
+    describe("findOne", function(){
+        var name;
+        // when using db, it's asynchronous, so put the done in there
+        beforeEach(function(done){
+           Thing.findOne({name: "Rock"})
+           // when you're done finding it, pass the rock that you found back
+            .then(function(rock){
+                name = rock.name;
+                done();
+            });
+        });
+        
+        it("it should return a rock", function(){
+            expect(name).toEqual("Rock");
+        })
+    });
+    
+    describe("creating a thing that exists", function(){
+        var error;
+        beforeEach(function(done) {
+           var badRock = new Thing({name: "Rock"});
+           // use a callback with a save with this function(e,x) thing
+           badRock.save(function(e,x){
+               error = e;
+               console.log(e);
+               console.log(x);
+               done();
+           })
+           // I expect my promise to not be resolved. I expect the promise to be rejected.
+        //   .catch(function(e){
+        //       error = e;
+        //       done();
+        //   });
+        });
+       it("returns an error", function(){
+           // in node, null is still 'defined'. only undefined is not defined.
+        //   expect(error).toBeDefined();
+            expect(error).not.toEqual(null);
+       }); 
+    });
+    
 });
